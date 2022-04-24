@@ -1,37 +1,38 @@
+from sqlite3 import Date
 from typing import List, Optional
-
+from datetime import date
 from pydantic import BaseModel
 
 
-class ItemBase(BaseModel):
-    title: str
-    description: Optional[str] = None
+class ClientBase(BaseModel):
+    cnpj: str
+    name: str
+    address: str
 
-
-class ItemCreate(ItemBase):
+class ClientCreate(ClientBase):
     pass
 
-
-class Item(ItemBase):
+class Client(ClientBase):
     id: int
-    owner_id: int
 
     class Config:
-        orm_mode = True
+        orm_mode = True    
 
 
-class UserBase(BaseModel):
-    email: str
+class LicenseBase(BaseModel):
+    licence_number: str
+    start_date: date
+    expiration_date: date
+    detail: str
+    agency: str
 
+class LicenseCreate(LicenseBase):
+    pass
 
-class UserCreate(UserBase):
-    password: str
-
-
-class User(UserBase):
+class License(LicenseBase):
     id: int
-    is_active: bool
-    items: List[Item] = []
 
     class Config:
-        orm_mode = True
+        orm_mode = True    
+
+

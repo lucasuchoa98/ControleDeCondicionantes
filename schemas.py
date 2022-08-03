@@ -1,37 +1,42 @@
-from typing import List, Optional
-
 from pydantic import BaseModel
+from typing import List
 
 
-class ItemBase(BaseModel):
-    title: str
-    description: Optional[str] = None
+class UserCreateInput(BaseModel):
+    name: str
 
 
-class ItemCreate(ItemBase):
-    pass
+class UserFavoriteAddInput(BaseModel):
+    user_id: int
+    symbol: str
 
 
-class Item(ItemBase):
+class StandardOutput(BaseModel):
+    message: str
+
+
+class ErrorOutput(BaseModel):
+    detail: str
+
+
+class Favorite(BaseModel):
     id: int
-    owner_id: int
+    symbol: str
+    user_id: int
 
     class Config:
         orm_mode = True
 
 
-class UserBase(BaseModel):
-    email: str
-
-
-class UserCreate(UserBase):
-    password: str
-
-
-class User(UserBase):
+class UserListOutput(BaseModel):
     id: int
-    is_active: bool
-    items: List[Item] = []
+    name: str
+    favorites: List[Favorite]
 
     class Config:
         orm_mode = True
+
+class DaySummaryOutput(BaseModel):
+    highest: float
+    lowest: float
+    symbol: str
